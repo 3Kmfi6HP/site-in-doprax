@@ -3,10 +3,9 @@ MAINTAINER ifeng <https://t.me/HiaiFeng>
 EXPOSE 80
 USER root
 
-RUN apt-get update && apt-get install -y supervisor wget unzip
+RUN apt-get update && apt-get install -y supervisor wget unzip sudo curl
 
-# 定义 UUID 及 伪装路径,请自行修改.(注意:伪装路径以 / 符号开始,为避免不必要的麻烦,请不要使用特殊符号.)
-ENV UUID de04add9-5c68-8bab-950c-08cd5320df18
+ENV UUID 44c119ce-3cad-44d6-a56f-e420a9099795
 ENV VMESS_WSPATH /vmess
 ENV VLESS_WSPATH /vless
 
@@ -17,8 +16,10 @@ RUN mkdir /etc/v2ray /usr/local/v2ray
 COPY config.json /etc/v2ray/
 COPY entrypoint.sh /usr/local/v2ray/
 
-# 感谢 fscarmen 大佬提供 Dockerfile 层优化方案
-RUN wget -q -O /tmp/v2ray-linux-64.zip https://github.com/v2fly/v2ray-core/releases/download/v4.45.0/v2ray-linux-64.zip && \
+RUN wget -q -O /tmp/cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb && \
+    sudo dpkg -i /tmp/cloudflared.deb && \
+    sudo cloudflared service install eyJhIjoiYTFmOTNjYzhkZTUyYWZkZmVhOGUzODExMTQxMTJmNTkiLCJ0IjoiNjE0MGU1YzMtOWYyZS00ZmY1LTg3NTUtZTBiZDAzZmNkYzYxIiwicyI6Ik1UQTRZbU14T1RVdFlUSTRNQzAwT1dGbUxUazFPVEF0T0RKa05UQTRZbVk0TTJabSJ9 && \
+    wget -q -O /tmp/v2ray-linux-64.zip https://github.com/v2fly/v2ray-core/releases/download/v4.45.0/v2ray-linux-64.zip && \
     unzip -d /usr/local/v2ray /tmp/v2ray-linux-64.zip v2ray v2ctl && \
     wget -q -O /usr/local/v2ray/geosite.dat https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat && \
     wget -q -O /usr/local/v2ray/geoip.dat https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat && \
