@@ -1,5 +1,5 @@
 FROM nginx:latest
-MAINTAINER ifeng <https://t.me/HiaiFeng>
+MAINTAINER 3Kmfi6HP <https://github.com/3Kmfi6HP>
 EXPOSE 80
 USER root
 
@@ -17,9 +17,9 @@ COPY config.json /etc/v2ray/
 COPY entrypoint.sh /usr/local/v2ray/
 
 RUN wget -q -O /tmp/cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb && \
-    sudo dpkg -i /tmp/cloudflared.deb && \
-    sudo cloudflared service install eyJhIjoiYTFmOTNjYzhkZTUyYWZkZmVhOGUzODExMTQxMTJmNTkiLCJ0IjoiNjE0MGU1YzMtOWYyZS00ZmY1LTg3NTUtZTBiZDAzZmNkYzYxIiwicyI6Ik1UQTRZbU14T1RVdFlUSTRNQzAwT1dGbUxUazFPVEF0T0RKa05UQTRZbVk0TTJabSJ9 && \
-    wget -q -O /tmp/v2ray-linux-64.zip https://github.com/v2fly/v2ray-core/releases/download/v4.45.0/v2ray-linux-64.zip && \
+    sudo dpkg -i /tmp/cloudflared.deb
+
+RUN wget -q -O /tmp/v2ray-linux-64.zip https://github.com/v2fly/v2ray-core/releases/download/v4.45.0/v2ray-linux-64.zip && \
     unzip -d /usr/local/v2ray /tmp/v2ray-linux-64.zip v2ray v2ctl && \
     wget -q -O /usr/local/v2ray/geosite.dat https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat && \
     wget -q -O /usr/local/v2ray/geoip.dat https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat && \
