@@ -3,7 +3,7 @@ MAINTAINER 3Kmfi6HP <https://github.com/3Kmfi6HP>
 EXPOSE 80
 USER root
 
-RUN apt-get update && apt-get install -y supervisor wget unzip sudo curl
+RUN apt-get update && apt-get install -y supervisor wget unzip sudo curl systemd 
 
 ENV UUID 44c119ce-3cad-44d6-a56f-e420a9099795
 ENV VMESS_WSPATH /vmess
