@@ -14,6 +14,7 @@
 					"alterId": 0
 				}]
 			},
+			"tag":"ws-vmess",
 			"streamSettings": {
 				"network": "ws",
 				"wsSettings": {
@@ -31,10 +32,29 @@
 				}],
 				"decryption": "none"
 			},
+			"tag":"ws-vless",
 			"streamSettings": {
 				"network": "ws",
 				"wsSettings": {
 					"path": "VLESS_WSPATH"
+				}
+			}
+		},
+		{
+			"port": 30000,
+			"listen": "127.0.0.1",
+			"protocol": "vless",
+			"settings": {
+				"clients": [{
+					"id": "UUID"
+				}],
+				"decryption": "none"
+			},
+			"tag":"ws-warp",
+			"streamSettings": {
+				"network": "ws",
+				"wsSettings": {
+					"path": "/warp"
 				}
 			}
 		}
@@ -42,7 +62,36 @@
 	"outbounds": [{
 		"protocol": "freedom",
 		"settings": {}
-	}],
+	},
+	{
+        "protocol":"socks",
+        "tag":"sockswarp",
+        "settings":{
+           "servers":[
+              {
+                 "address":"127.0.0.1",
+                 "port":40000
+              }
+           ]
+        }
+     }
+	],
+	"routing":{
+		"rules":[
+		   {
+			  "type":"field",
+			  "outboundTag":"sockstor",
+			  "inboundTag":["ws-warp"]
+		   },
+		   {
+			  "type":"field",
+			  "outboundTag":"blocked",
+			  "domain":[
+				 "geosite:category-ads-all"
+			  ]
+		   }
+		]
+	 },
 	"dns": {
 		"server": [
 			"8.8.8.8",
